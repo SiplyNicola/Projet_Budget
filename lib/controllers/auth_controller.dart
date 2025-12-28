@@ -6,18 +6,11 @@ import '../models/user.dart';
 class AuthController {
 
   Future<void> inscription(String pseudo, String mail, String password) async {
-    print("--- DEBUG INSCRIPTION ---");
-    print("Pseudo reçu : '$pseudo'");
-    print("Mail reçu : '$mail'");
-    print("Mot de passe reçu : '$password'");
 
     final userExists = await DatabaseService().userExists(mail);
 
-    print("L'utilisateur existe-t-il déjà ? : $userExists");
-
     if (userExists) {
-      print("ERREUR : Blocage car l'email est détecté comme existant.");
-      throw Exception("Adresse email déjà présente dans la db");
+      throw Exception("Email address already present in the database");
     }
 
     // Hash
@@ -31,7 +24,7 @@ class AuthController {
     );
 
     await DatabaseService().insertUser(newUser);
-    print("SUCCÈS : Utilisateur inséré !");
+    print("SUCCESS: User inserted !");
   }
 
   Future<User> connexion(String mail, String password) async {
@@ -40,7 +33,7 @@ class AuthController {
     final user = await DatabaseService().getUserByCredentials(mail, inputHash);
 
     if (user == null) {
-      throw Exception("Identifiants invalides");
+      throw Exception("Invalid credentials");
     }
 
     return user;

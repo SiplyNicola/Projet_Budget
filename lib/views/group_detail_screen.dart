@@ -80,6 +80,9 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
 
                     bool isNegative = balance.amount < -0.01;
                     bool isPositive = balance.amount > 0.01;
+                    print(isNegative);
+                    print(isPositive);
+                    print(balance.amount);
 
 
                     return Padding(
@@ -93,9 +96,11 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
 
                         backgroundColor: isNegative
                             ? Colors.red[100]
-                            : (isPositive ? Colors.green[100] : Colors.grey[200]),
+                            : ((isPositive) ? Colors.green[100] : Colors.grey[200]),
 
+                        onPressed: () {
 
+                        },
                       ),
                     );
                   }).toList(),

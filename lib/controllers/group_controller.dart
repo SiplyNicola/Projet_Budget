@@ -24,7 +24,7 @@ class GroupController {
     Group? group = await DatabaseService().getGroupByCode(code);
 
     if (group == null) {
-      throw Exception("Code lié à aucun groupe");
+      throw Exception("Code not linked to any group");
     }
 
     GroupMember membre = GroupMember(
@@ -44,7 +44,7 @@ class GroupController {
     Group group = await DatabaseService().getGroupById(groupId);
 
     if (group.ownerId != userId) {
-      throw Exception("Seul le propriétaire peut supprimer le groupe");
+      throw Exception("Only the owner can delete the group");
     }
 
     await DatabaseService().deleteGroup(groupId);
@@ -77,7 +77,7 @@ class GroupController {
     Group group = await DatabaseService().getGroupById(groupId);
 
     if (group.ownerId != userId) {
-      throw Exception("Action refusée : Vous n'êtes pas le propriétaire du groupe.");
+      throw Exception("Action denied: You are not the group owner.");
     }
 
     await DatabaseService().updateGroupName(groupId, newName);

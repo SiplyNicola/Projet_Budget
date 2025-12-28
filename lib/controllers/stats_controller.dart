@@ -68,7 +68,7 @@ class StatsController {
     tempBalances.forEach((userId, amount) {
       String username = members.firstWhere(
               (m) => m.id == userId,
-          orElse: () => User(id: 0, username: "Inconnu", email: "", password: "", createdAt: DateTime.now())
+          orElse: () => User(id: 0, username: "Unknow", email: "", password: "", createdAt: DateTime.now())
       ).username;
 
       results.add(UserBalance(userId, username, amount));
@@ -85,7 +85,7 @@ class StatsController {
     return expenses.map((dep) {
       String pseudo = members.firstWhere(
               (m) => m.id == dep.payerId,
-          orElse: () => User(id: 0, username: "Inconnu", email: "", password: "", createdAt: DateTime.now())
+          orElse: () => User(id: 0, username: "Unknow", email: "", password: "", createdAt: DateTime.now())
       ).username;
 
       return ExpenseWithUsername(dep, pseudo);
