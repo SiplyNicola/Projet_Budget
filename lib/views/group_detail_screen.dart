@@ -36,7 +36,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
               showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
-                  title: Text("Inviter des membres"),
+                  title: Text("Invite members"),
                   content: SelectableText(code, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 ),
               );
@@ -72,7 +72,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                 if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
 
                 var balances = snapshot.data!;
-                if (balances.isEmpty) return Center(child: Text("Aucune balance"));
+                if (balances.isEmpty) return Center(child: Text("No balances"));
 
                 return ListView(
                   scrollDirection: Axis.horizontal,
@@ -111,7 +111,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
 
                 var list = snapshot.data!;
 
-                if (list.isEmpty) return Center(child: Text("Aucune dépense."));
+                if (list.isEmpty) return Center(child: Text("No expenses"));
 
                 return ListView.builder(
                   itemCount: list.length,
@@ -127,7 +127,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                         ),
                         title: Text(item.expense.title, style: TextStyle(fontWeight: FontWeight.bold)),
 
-                        subtitle: Text("Payé par ${item.payerUsername}"),
+                        subtitle: Text("Paid by ${item.payerUsername}"),
 
                         trailing: Text(
                           "${item.expense.amount.toStringAsFixed(2)} €",
@@ -138,9 +138,9 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                               context,
                               '/expense_form',
                               arguments: {
-                                'groupeId': widget.group.id,
-                                'depenseExistante': item.expense,
-                                'payeurId': widget.currentUserId
+                                'groupId': widget.group.id,
+                                'existingExpense': item.expense,
+                                'payerId': widget.currentUserId
                               }
                           ).then((_) => setState(() {}));
                         },
@@ -160,8 +160,8 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
               context,
               '/expense_form',
               arguments: {
-                'groupeId': widget.group.id,
-                'payeurId': widget.currentUserId
+                'groupId': widget.group.id,
+                'payerId': widget.currentUserId
               }
           ).then((_) => setState(() {}));
         },
@@ -175,10 +175,10 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text("Modifier le groupe"),
-        content: TextField(controller: _editCtrl, decoration: InputDecoration(labelText: "Nouveau nom")),
+        title: Text("Edit group"),
+        content: TextField(controller: _editCtrl, decoration: InputDecoration(labelText: "New name")),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Annuler")),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Cancel")),
           ElevatedButton(
             onPressed: () async {
               try {
@@ -189,7 +189,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
               }
             },
-            child: Text("Enregistrer"),
+            child: Text("Save"),
           )
         ],
       ),
@@ -201,10 +201,10 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text("Supprimer le groupe ?"),
-        content: Text("Attention, cela supprimera toutes les dépenses et l'historique pour TOUS les membres. Action irréversible."),
+        title: Text("Delete group ?"),
+        content: Text("Warning: this will delete all expenses and history for ALL members. This action is irreversible."),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Annuler")),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Cancel")),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () async {
@@ -212,7 +212,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
               Navigator.pop(ctx);
               Navigator.pop(context);
             },
-            child: Text("Supprimer"),
+            child: Text("Delete"),
           )
         ],
       ),
@@ -223,17 +223,17 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text("Quitter le groupe ?"),
-        content: Text("Vous n'aurez plus accès aux dépenses."),
+        title: Text("Leave group ?"),
+        content: Text("You will no longer have access to the expenses."),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Annuler")),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Cancel")),
           ElevatedButton(
             onPressed: () async {
               await _groupCtrl.leaveGroup(widget.group.id, widget.currentUserId);
               Navigator.pop(ctx);
               Navigator.pop(context);
             },
-            child: Text("Quitter"),
+            child: Text("Leave"),
           )
         ],
       ),

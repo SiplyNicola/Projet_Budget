@@ -29,7 +29,7 @@ class _PersonalExpenseScreenState extends State<PersonalExpenseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Mes Dépenses Perso"),
+        title: Text("My Personal Expenses"),
       ),
       body: FutureBuilder<List<Expense>>(
         future: _statsCtrl.getPersoExpenses(widget.userId),
@@ -45,7 +45,7 @@ class _PersonalExpenseScreenState extends State<PersonalExpenseScreen> {
                 children: [
                   Icon(Icons.account_balance_wallet_outlined, size: 64, color: Colors.grey),
                   SizedBox(height: 16),
-                  Text("Aucune dépense personnelle."),
+                  Text("No personal expenses."),
                 ],
               ),
             );
@@ -74,7 +74,7 @@ class _PersonalExpenseScreenState extends State<PersonalExpenseScreen> {
                         context,
                         '/expense_form',
                         arguments: {
-                          'groupeId': null,
+                          'groupId': null,
                           'existingExpense': expense,
                           'payerId': widget.userId
                         }
@@ -94,7 +94,7 @@ class _PersonalExpenseScreenState extends State<PersonalExpenseScreen> {
               context,
               '/expense_form',
               arguments: {
-                'groupeId': null,
+                'groupId': null,
                 'payerId': widget.userId
               }
           ).then((_) => setState(() {}));

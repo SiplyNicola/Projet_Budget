@@ -84,7 +84,7 @@ class DatabaseService {
     await db.rawInsert("INSERT INTO category (name) VALUES ('Food')");
     await db.rawInsert("INSERT INTO category (name) VALUES ('Housing')");
     await db.rawInsert("INSERT INTO category (name) VALUES ('Transportation')");
-    await db.rawInsert("INSERT INTO category (name) VALUES ('Leisure')");
+    await db.rawInsert("INSERT INTO category (name) VALUES ('Hobby')");
 
     // 5. Expense Table
     await db.execute('''

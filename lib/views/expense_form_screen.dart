@@ -43,7 +43,7 @@ class _ExpenseFormScreenState extends State<ExpenseFormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing ? "Modifier Dépense" : "Nouvelle Dépense"),
+        title: Text(isEditing ? "Edit Expense" : "New Expense"),
         actions: [
           if (isEditing)
             IconButton(
@@ -59,18 +59,18 @@ class _ExpenseFormScreenState extends State<ExpenseFormScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(controller: _titleCtrl, decoration: InputDecoration(labelText: 'Titre')),
-            TextField(controller: _amountCtrl, decoration: InputDecoration(labelText: 'Montant'), keyboardType: TextInputType.number),
+            TextField(controller: _titleCtrl, decoration: InputDecoration(labelText: 'Title')),
+            TextField(controller: _amountCtrl, decoration: InputDecoration(labelText: 'Amount'), keyboardType: TextInputType.number),
             SizedBox(height: 20),
 
             DropdownButtonFormField<int>(
               value: _selectedCategoryId,
-              decoration: InputDecoration(labelText: 'Catégorie'),
+              decoration: InputDecoration(labelText: 'Category'),
               items: [
-                DropdownMenuItem(child: Row(children: [Icon(Icons.fastfood), SizedBox(width: 8), Text("Alimentation")]), value: 1),
-                DropdownMenuItem(child: Row(children: [Icon(Icons.home), SizedBox(width: 8), Text("Logement")]), value: 2),
-                DropdownMenuItem(child: Row(children: [Icon(Icons.directions_car), SizedBox(width: 8), Text("Transport")]), value: 3),
-                DropdownMenuItem(child: Row(children: [Icon(Icons.sports_esports), SizedBox(width: 8), Text("Loisirs")]), value: 4),
+                DropdownMenuItem(child: Row(children: [Icon(Icons.fastfood), SizedBox(width: 8), Text("Food")]), value: 1),
+                DropdownMenuItem(child: Row(children: [Icon(Icons.home), SizedBox(width: 8), Text("Housing")]), value: 2),
+                DropdownMenuItem(child: Row(children: [Icon(Icons.directions_car), SizedBox(width: 8), Text("Transportation")]), value: 3),
+                DropdownMenuItem(child: Row(children: [Icon(Icons.sports_esports), SizedBox(width: 8), Text("Hobby")]), value: 4),
               ],
               onChanged: (val) => setState(() => _selectedCategoryId = val!),
             ),
@@ -149,7 +149,7 @@ class _ExpenseFormScreenState extends State<ExpenseFormScreen> {
                 }
                 Navigator.pop(context);
               },
-              child: Text("Valider"),
+              child: Text("Confirm"),
             )),
           ],
         ),

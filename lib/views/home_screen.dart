@@ -39,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
           PopupMenuButton(
             icon: Icon(Icons.person),
             itemBuilder: (context) => [
-              PopupMenuItem(child: Text("Déconnexion"), value: 'logout'),
-              PopupMenuItem(child: Text("Supprimer compte"), value: 'delete'),
+              PopupMenuItem(child: Text("Logout"), value: 'logout'),
+              PopupMenuItem(child: Text("Delete account"), value: 'delete'),
             ],
             onSelected: (val) {
               if (val == 'logout') {
@@ -59,11 +59,13 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           InkWell(
             onTap: () {
+              print(currentUserId);
               Navigator.pushNamed(
                   context,
                   '/personal_expenses',
                   arguments: currentUserId
               ).then((_) => setState(() {}));
+
             },
             child: Container(
               color: Colors.blue,
@@ -74,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context, snapshot) {
                   return Column(
                     children: [
-                      Text("Dépenses du mois (Perso + Groupes)", style: TextStyle(color: Colors.white)),
+                      Text("Monthly Expenses (Personal + Groups)", style: TextStyle(color: Colors.white)),
                       Text(
                         "${snapshot.data?.toStringAsFixed(2) ?? 0} €",
                         style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
@@ -85,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Icon(Icons.history, color: Colors.white70, size: 16),
                           SizedBox(width: 5),
-                          Text("Voir mes dépenses perso", style: TextStyle(color: Colors.white70, fontSize: 12)),
+                          Text("View personal expenses", style: TextStyle(color: Colors.white70, fontSize: 12)),
                         ],
                       )
                     ],
@@ -103,11 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
 
                 if (snapshot.hasError) {
-                  return Center(child: Text("Erreur : ${snapshot.error}"));
+                  return Center(child: Text("Error : ${snapshot.error}"));
                 }
 
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text("Aucun groupe. Créez-en un !"));
+                  return Center(child: Text("No groups yet. Create one !"));
                 }
 
                 return ListView.builder(
@@ -157,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text("Nouveau"),
+        title: Text("New"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -166,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pop(ctx);
                   _showCreateGroupDialog(context);
                 },
-                child: Text("Créer un groupe")
+                child: Text("Create a group")
             ),
             SizedBox(height: 10),
             ElevatedButton(
@@ -174,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pop(ctx);
                   _showJoinGroupDialog(context);
                 },
-                child: Text("Rejoindre un groupe")
+                child: Text("Join a group")
             ),
             SizedBox(height: 10),
             ElevatedButton(
@@ -182,9 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pop(ctx);
                   Navigator.pushNamed(context, '/expense_form', arguments: {
                     'isPerso': true,
-                    'payeurId': currentUserId});
+                    'payerId': currentUserId});
                 },
-                child: Text("Dépense Perso")
+                child: Text("Personal Expense")
             ),
           ],
         ),
@@ -196,17 +198,17 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text("Créer un groupe"),
-        content: TextField(controller: _groupNameCtrl, decoration: InputDecoration(labelText: "Nom du groupe")),
+        title: Text("Create a group"),
+        content: TextField(controller: _groupNameCtrl, decoration: InputDecoration(labelText: "Group name")),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Annuler")),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Cancel")),
           ElevatedButton(
             onPressed: () async {
               await _groupController.createGroup(_groupNameCtrl.text, currentUserId);
               Navigator.pop(ctx);
               setState(() {});
             },
-            child: Text("Créer"),
+            child: Text("Create"),
           )
         ],
       ),
@@ -217,10 +219,10 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text("Rejoindre un groupe"),
-        content: TextField(controller: _GroupCodeCtrl, decoration: InputDecoration(labelText: "Code du groupe")),
+        title: Text("Join a group"),
+        content: TextField(controller: _GroupCodeCtrl, decoration: InputDecoration(labelText: "Group code")),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Annuler")),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Cancel")),
           ElevatedButton(
             onPressed: () async {
               try {
@@ -230,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
               }
             },
-            child: Text("Rejoindre"),
+            child: Text("Join"),
           )
         ],
       ),

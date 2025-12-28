@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Projet Budget',
+      title: 'Budg€t',
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
